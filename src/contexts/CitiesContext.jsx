@@ -1,7 +1,9 @@
+/* eslint-disable react-refresh/only-export-components */
 /* eslint-disable react/prop-types */
 import {
   createContext,
   forwardRef,
+  useCallback,
   useContext,
   useEffect,
   useState,
@@ -47,19 +49,22 @@ const CitiesProvider = ({ children }) => {
     fetchData();
   }, []);
 
-  async function getCity(id) {
-    if (+id === currentCity.id) return;
-    try {
-      setIsLoading(true);
-      const res = await fetch(`${BASE_URL}/${id}`);
-      const data = await res.json();
-      setCurrentCity(data);
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setIsLoading(false);
-    }
-  }
+  const getCity = useCallback(
+    async function getCity(id) {
+      if (+id === currentCity.id) return;
+      try {
+        setIsLoading(true);
+        const res = await fetch(`${BASE_URL}/${id}`);
+        const data = await res.json();
+        setCurrentCity(data);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setIsLoading(false);
+      }
+    },
+    [currentCity.id]
+  );
 
   async function createCity(city) {
     try {
