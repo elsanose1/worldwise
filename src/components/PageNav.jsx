@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import style from "./pageNav.module.css";
+import style from "./PageNav.module.css";
 import Logo from "./Logo";
 const PageNav = () => {
   return (
